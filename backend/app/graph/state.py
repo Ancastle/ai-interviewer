@@ -1,6 +1,6 @@
 from typing import Annotated
+from typing_extensions import TypedDict, NotRequired
 from langgraph.graph.message import add_messages
-from typing_extensions import TypedDict
 
 
 class InterviewState(TypedDict):
@@ -12,3 +12,4 @@ class InterviewState(TypedDict):
     scores: list[dict]
     messages: Annotated[list, add_messages]
     langfuse_trace_id: str
+    study_content: NotRequired[str]

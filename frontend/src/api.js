@@ -34,6 +34,28 @@ export async function startSession(sessionId) {
   return res.json()
 }
 
+export async function getSubjects() {
+  const res = await fetch(`${BASE}/study/subjects`)
+  if (!res.ok) throw new Error('Failed to fetch subjects')
+  return res.json()
+}
+
+export async function getCategories(subject) {
+  const res = await fetch(`${BASE}/study/${subject}/categories`)
+  if (!res.ok) throw new Error('Failed to fetch categories')
+  return res.json()
+}
+
+export async function startStudySession(sessionId, subject, categoryId) {
+  const res = await fetch(`${BASE}/session/study/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id: sessionId, subject, category_id: categoryId }),
+  })
+  if (!res.ok) throw new Error('Failed to start study session')
+  return res.json()
+}
+
 export async function submitAnswer(sessionId, answer) {
   const res = await fetch(`${BASE}/session/${sessionId}/answer`, {
     method: 'POST',

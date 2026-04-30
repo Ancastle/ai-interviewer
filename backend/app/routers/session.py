@@ -42,6 +42,39 @@ def create_session(db: DBSession = Depends(get_db)):
     return {"session_id": session.id}
 
 
+class StudyStartRequest(BaseModel):
+    session_id: int
+    subject: str
+    category_id: str
+    model: str = settings.default_model
+    max_questions: int = 5
+
+
+@router.post("/study/start")
+async def start_study_session(req: StudyStartRequest):
+    from app.services.study_reader import get_study_guide
+    study_content = get_study_guide(req.subject, req.category_id)
+
+    config = {"configurable": {"thread_id": str(req.session_id)}}
+    trace_id = str(uuid.uuid4())
+    langfuse.trace(id=trace_id, name="study_session", metadata={"session_id": req.session_id, "subject": req.subject})
+
+    initial_state = {
+        "session_id": req.session_id,
+        "model": req.model,
+        "max_questions": req.max_questions,
+        "question_count": 0,
+        "current_question": "",
+        "scores": [],
+        "messages": [],
+        "study_content": study_content,
+        "langfuse_trace_id": trace_id,
+    }
+    state = await interview_graph.ainvoke(initial_state, config=config)
+    graph_state = interview_graph.get_state(config)
+    return _extract_response(state, graph_state)
+
+
 @router.post("/start")
 async def start_session(req: StartRequest):
     config = {"configurable": {"thread_id": str(req.session_id)}}

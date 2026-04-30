@@ -9,6 +9,7 @@ from app.routers.chat import router as chat_router
 from app.routers.interview import router as interview_router
 from app.routers.documents import router as documents_router
 from app.routers.session import router as session_router
+from app.routers.study import router as study_router
 import app.models
 
 
@@ -30,6 +31,7 @@ app.include_router(chat_router)
 app.include_router(interview_router)
 app.include_router(documents_router)
 app.include_router(session_router)
+app.include_router(study_router)
 
 
 @app.get("/health")

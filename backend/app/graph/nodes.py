@@ -6,6 +6,7 @@ from app.services.openrouter import chat, embed
 from app.services.vector_store import search
 from app.services.langfuse import langfuse
 from app.prompts.interviewer import build_interviewer_prompt
+from app.prompts.study_interviewer import build_study_interviewer_prompt
 from app.prompts.evaluator import build_evaluator_prompt
 
 
@@ -16,21 +17,22 @@ def _get_span(state: InterviewState, name: str):
 
 async def generate_question(state: InterviewState) -> dict:
     span = _get_span(state, "generate_question")
-    query = state["current_question"] or "technical skills and experience"
+    study_content = state.get("study_content", "")
 
-    cv_chunks = search(state["session_id"], "cv", (await embed([query]))[0])
-    jd_chunks = search(state["session_id"], "job_description", (await embed([query]))[0])
-
-    cv_context = "\n\n".join(cv_chunks)
-    jd_context = "\n\n".join(jd_chunks)
-
-    system_prompt = build_interviewer_prompt(cv_context, jd_context)
+    if study_content:
+        system_prompt = build_study_interviewer_prompt(study_content)
+    else:
+        query = state["current_question"] or "technical skills and experience"
+        cv_chunks = search(state["session_id"], "cv", (await embed([query]))[0])
+        jd_chunks = search(state["session_id"], "job_description", (await embed([query]))[0])
+        system_prompt = build_interviewer_prompt("\n\n".join(cv_chunks), "\n\n".join(jd_chunks))
     messages = [{"role": "system", "content": system_prompt}] + [
         {"role": m.type, "content": m.content}
         for m in state["messages"]
     ]
 
     question = await chat(state["model"], messages, trace_name="generate_question", parent=span)
+
     span.end()
 
     return {

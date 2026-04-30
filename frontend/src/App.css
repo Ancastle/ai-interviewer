@@ -89,6 +89,49 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .error { color: var(--error); font-size: 14px; margin-bottom: 16px; }
 .setup-card button { width: 100%; margin-top: 4px; }
 
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mode-toggle button {
+  flex: 1;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  margin: 0;
+}
+.mode-toggle button.active {
+  background: var(--primary);
+  color: white;
+}
+.mode-toggle button:hover:not(.active) {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.field select:focus { border-color: var(--primary); }
+.field select:disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* CHAT */
 .chat {
   display: flex;
