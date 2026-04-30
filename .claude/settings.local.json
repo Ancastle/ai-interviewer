@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker compose ps *)",
+      "Bash(docker compose exec *)",
+      "PowerShell(docker compose exec *)",
+      "PowerShell(netstat *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(Get-WmiObject *)",
+      "PowerShell(Get-CimInstance *)"
+    ]
+  }
+}
