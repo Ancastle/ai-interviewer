@@ -1,4 +1,7 @@
+from pathlib import Path
 from pydantic_settings import BaseSettings
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
@@ -16,7 +19,8 @@ class Settings(BaseSettings):
         )
 
     class Config:
-        env_file = "../.env"
+        env_file = ROOT / ".env"
+        extra = "ignore"
 
 
 settings = Settings()
