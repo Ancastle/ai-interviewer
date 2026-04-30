@@ -10,7 +10,8 @@
       "PowerShell(Get-CimInstance *)",
       "PowerShell(docker compose ps *)",
       "PowerShell(taskkill *)",
-      "PowerShell(echo $env:OPENROUTER_API_KEY)"
+      "PowerShell(echo $env:OPENROUTER_API_KEY)",
+      "Bash(curl *)"
     ]
   }
 }

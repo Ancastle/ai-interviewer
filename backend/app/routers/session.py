@@ -1,10 +1,14 @@
 import uuid
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
+from sqlalchemy.orm import Session as DBSession
+from sqlalchemy import select
 from langgraph.types import Command
 from app.graph.interview_graph import interview_graph
 from app.services.langfuse import langfuse
 from app.config import settings
+from app.database import get_db
+from app.models.message import Message
 
 router = APIRouter(prefix="/session", tags=["session"])
 
@@ -47,6 +51,19 @@ async def start_session(req: StartRequest):
     state = await interview_graph.ainvoke(initial_state, config=config)
     graph_state = interview_graph.get_state(config)
     return _extract_response(state, graph_state)
+
+
+@router.get("/{session_id}/history")
+def get_history(session_id: int, db: DBSession = Depends(get_db)):
+    messages = db.execute(
+        select(Message).where(Message.session_id == session_id).order_by(Message.created_at)
+    ).scalars().all()
+    return {
+        "messages": [
+            {"role": m.role.value, "content": m.content, "created_at": m.created_at.isoformat()}
+            for m in messages
+        ]
+    }
 
 
 @router.post("/{session_id}/answer")
