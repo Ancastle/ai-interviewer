@@ -7,17 +7,19 @@
 
 ## Active Section
 
-**Current Week:** Week 1 — Backend Base
-**Status:** In progress
-**Focus:** OpenRouter integration (`POST /chat`)
+**Current Week:** Week 2 — Prompt Engineering + Langfuse
+**Status:** Not started
+**Focus:** Interviewer system prompt, evaluator prompt, Langfuse setup
 
 **In Progress:**
-- [ ] OpenRouter integration (`POST /chat`)
+- [ ] nothing yet
 
-**Completed This Week:**
+**Completed This Week (Week 1):**
 - [x] FastAPI project setup + folder structure
 - [x] PostgreSQL models: `sessions`, `messages`, `documents`
 - [x] Health check endpoint
+- [x] OpenRouter integration (`POST /chat`)
+- [x] SSE streaming endpoint (`POST /chat/stream`)
 
 **Blockers:**
 - none
@@ -227,7 +229,7 @@ Screens:
 
 | Week | Topic | Status |
 |------|-------|--------|
-| 1 | Backend Base | Not started |
+| 1 | Backend Base | Done |
 | 2 | Prompt Engineering + Langfuse | Not started |
 | 3 | RAG | Not started |
 | 4 | LangGraph | Not started |
