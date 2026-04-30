@@ -5,6 +5,7 @@ from sqlalchemy import text
 from app.database import engine, Base, SessionLocal
 from app.routers.chat import router as chat_router
 from app.routers.interview import router as interview_router
+from app.routers.documents import router as documents_router
 import app.models
 
 
@@ -17,6 +18,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Interview Coach API", lifespan=lifespan)
 app.include_router(chat_router)
 app.include_router(interview_router)
+app.include_router(documents_router)
 
 
 @app.get("/health")

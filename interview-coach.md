@@ -7,17 +7,19 @@
 
 ## Active Section
 
-**Current Week:** Week 2 — Prompt Engineering + Langfuse
-**Status:** In progress
-**Focus:** Interviewer system prompt, evaluator prompt, prompt templates
+**Current Week:** Week 3 — RAG
+**Status:** Not started
+**Focus:** Parse CV, chunking, embeddings, sqlite-vec
 
 **In Progress:**
-- [ ] Interviewer system prompt
-- [ ] Evaluator system prompt
+- [ ] nothing yet
 
-**Completed This Week (Week 2):**
+**Completed (Week 2):**
 - [x] Langfuse local setup (Docker)
 - [x] Instrument LLM calls: tokens, latency, prompt used
+- [x] Interviewer system prompt
+- [x] Evaluator system prompt
+- [x] Prompt templates: generate question / evaluate answer
 
 **Completed (Week 1):**
 - [x] FastAPI project setup + folder structure
@@ -235,7 +237,7 @@ Screens:
 | Week | Topic | Status |
 |------|-------|--------|
 | 1 | Backend Base | Done |
-| 2 | Prompt Engineering + Langfuse | Not started |
+| 2 | Prompt Engineering + Langfuse | Done |
 | 3 | RAG | Not started |
 | 4 | LangGraph | Not started |
 | 5 | MCP Server | Not started |
