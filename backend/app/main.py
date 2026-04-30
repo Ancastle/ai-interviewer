@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.database import engine, Base
+from fastapi.responses import JSONResponse
+from sqlalchemy import text
+from app.database import engine, Base, SessionLocal
 from app.routers.chat import router as chat_router
 import app.models
 
@@ -17,4 +19,16 @@ app.include_router(chat_router)
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    try:
+        db = SessionLocal()
+        db.execute(text("SELECT 1"))
+        db.close()
+        db_status = "ok"
+    except Exception as e:
+        db_status = str(e)
+
+    status = "ok" if db_status == "ok" else "degraded"
+    return JSONResponse(
+        status_code=200 if status == "ok" else 503,
+        content={"status": status, "db": db_status +"HOLa"},
+    )
