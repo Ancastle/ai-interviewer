@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     postgres_host: str = "localhost"
     postgres_port: int = 5433
     openrouter_api_key: str
-    default_model: str = "tencent/hy3-preview:free"
+    default_model: str = "google/gemini-2.0-flash-exp:free"
     langfuse_public_key: str
     langfuse_secret_key: str
     langfuse_host: str = "http://localhost:3000"
