@@ -9,6 +9,7 @@ from app.services.langfuse import langfuse
 from app.config import settings
 from app.database import get_db
 from app.models.message import Message
+from app.models.session import Session as InterviewSession
 
 router = APIRouter(prefix="/session", tags=["session"])
 
@@ -30,6 +31,15 @@ def _extract_response(state: dict, graph_state) -> dict:
     if is_done:
         return {"done": True, "report": last_message.content, "scores": state["scores"]}
     return {"done": False, "question": last_message.content}
+
+
+@router.post("")
+def create_session(db: DBSession = Depends(get_db)):
+    session = InterviewSession(model=settings.default_model)
+    db.add(session)
+    db.commit()
+    db.refresh(session)
+    return {"session_id": session.id}
 
 
 @router.post("/start")
