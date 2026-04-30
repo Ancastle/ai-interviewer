@@ -8,14 +8,16 @@
 ## Active Section
 
 **Current Week:** Week 1 — Backend Base
-**Status:** Not started
-**Focus:** FastAPI setup, SQLite models, OpenRouter integration, SSE streaming
+**Status:** In progress
+**Focus:** OpenRouter integration (`POST /chat`)
 
 **In Progress:**
-- [ ] nothing yet
+- [ ] OpenRouter integration (`POST /chat`)
 
 **Completed This Week:**
-- none
+- [x] FastAPI project setup + folder structure
+- [x] PostgreSQL models: `sessions`, `messages`, `documents`
+- [x] Health check endpoint
 
 **Blockers:**
 - none
@@ -75,6 +77,36 @@ interview-coach/
 - [ ] Basic health check and manual test
 
 **Key concept:** How HTTP streaming works with Server-Sent Events.
+
+#### Database Models
+
+**`sessions`**
+| Column | Type | Notes |
+|--------|------|-------|
+| id | int PK | |
+| model | str | OpenRouter model used |
+| status | enum | `in_progress` / `completed` |
+| created_at | datetime TZ | |
+
+**`messages`**
+| Column | Type | Notes |
+|--------|------|-------|
+| id | int PK | |
+| session_id | FK → sessions | |
+| role | enum | `agent` / `user` |
+| content | text | |
+| created_at | datetime TZ | |
+
+**`documents`**
+| Column | Type | Notes |
+|--------|------|-------|
+| id | int PK | |
+| session_id | FK → sessions | |
+| type | enum | `cv` / `job_description` |
+| content | text | |
+| created_at | datetime TZ | |
+
+Relationships: `session → messages` (1:N), `session → documents` (1:N). Cascade delete en ambas.
 
 ---
 

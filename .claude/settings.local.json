@@ -8,7 +8,8 @@
       "PowerShell(Get-Process *)",
       "PowerShell(Get-WmiObject *)",
       "PowerShell(Get-CimInstance *)",
-      "PowerShell(docker compose ps *)"
+      "PowerShell(docker compose ps *)",
+      "PowerShell(taskkill *)"
     ]
   }
 }
