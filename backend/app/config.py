@@ -12,6 +12,9 @@ class Settings(BaseSettings):
     postgres_port: int = 5433
     openrouter_api_key: str
     default_model: str = "tencent/hy3-preview:free"
+    langfuse_public_key: str
+    langfuse_secret_key: str
+    langfuse_host: str = "http://localhost:3000"
 
     @property
     def database_url(self) -> str:

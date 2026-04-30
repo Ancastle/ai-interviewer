@@ -8,13 +8,18 @@
 ## Active Section
 
 **Current Week:** Week 2 — Prompt Engineering + Langfuse
-**Status:** Not started
-**Focus:** Interviewer system prompt, evaluator prompt, Langfuse setup
+**Status:** In progress
+**Focus:** Interviewer system prompt, evaluator prompt, prompt templates
 
 **In Progress:**
-- [ ] nothing yet
+- [ ] Interviewer system prompt
+- [ ] Evaluator system prompt
 
-**Completed This Week (Week 1):**
+**Completed This Week (Week 2):**
+- [x] Langfuse local setup (Docker)
+- [x] Instrument LLM calls: tokens, latency, prompt used
+
+**Completed (Week 1):**
 - [x] FastAPI project setup + folder structure
 - [x] PostgreSQL models: `sessions`, `messages`, `documents`
 - [x] Health check endpoint
