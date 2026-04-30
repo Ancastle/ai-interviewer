@@ -7,12 +7,19 @@
 
 ## Active Section
 
-**Current Week:** Week 3 — RAG
+**Current Week:** Week 4 — LangGraph
 **Status:** Not started
-**Focus:** Parse CV, chunking, embeddings, sqlite-vec
+**Focus:** Graph setup, nodes, conditional edges
 
 **In Progress:**
 - [ ] nothing yet
+
+**Completed (Week 3):**
+- [x] Parse CV (PDF → text)
+- [x] Chunking with overlap
+- [x] Embeddings via OpenRouter
+- [x] sqlite-vec vector store
+- [x] Retrieval endpoint
 
 **Completed (Week 2):**
 - [x] Langfuse local setup (Docker)
@@ -238,7 +245,7 @@ Screens:
 |------|-------|--------|
 | 1 | Backend Base | Done |
 | 2 | Prompt Engineering + Langfuse | Done |
-| 3 | RAG | Not started |
+| 3 | RAG | Done |
 | 4 | LangGraph | Not started |
 | 5 | MCP Server | Not started |
 | 6 | Frontend | Not started |
