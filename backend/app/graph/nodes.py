@@ -4,11 +4,18 @@ from langgraph.types import interrupt
 from app.graph.state import InterviewState
 from app.services.openrouter import chat, embed
 from app.services.vector_store import search
+from app.services.langfuse import langfuse
 from app.prompts.interviewer import build_interviewer_prompt
 from app.prompts.evaluator import build_evaluator_prompt
 
 
+def _get_span(state: InterviewState, name: str):
+    trace = langfuse.trace(id=state["langfuse_trace_id"], name="interview_session")
+    return trace.span(name=name)
+
+
 async def generate_question(state: InterviewState) -> dict:
+    span = _get_span(state, "generate_question")
     query = state["current_question"] or "technical skills and experience"
 
     cv_chunks = search(state["session_id"], "cv", (await embed([query]))[0])
@@ -23,7 +30,8 @@ async def generate_question(state: InterviewState) -> dict:
         for m in state["messages"]
     ]
 
-    question = await chat(state["model"], messages, trace_name="generate_question")
+    question = await chat(state["model"], messages, trace_name="generate_question", parent=span)
+    span.end()
 
     return {
         "messages": [AIMessage(content=question)],
@@ -45,8 +53,11 @@ async def evaluate_answer(state: InterviewState) -> dict:
         follow_up = AIMessage(content="Could you elaborate a bit more on that?")
         return {"messages": [follow_up]}
 
+    span = _get_span(state, "evaluate_answer")
     messages = build_evaluator_prompt(question, answer)
-    result = await chat(state["model"], messages, trace_name="evaluate_answer")
+    result = await chat(state["model"], messages, trace_name="evaluate_answer", parent=span)
+    span.end()
+
     cleaned = result.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     evaluation = json.loads(cleaned)
 
@@ -81,11 +92,14 @@ Individual feedback:
 
 Write a 3-4 sentence summary: what went well, what to improve, and an honest overall assessment."""
 
+    span = _get_span(state, "generate_final_report")
     report = await chat(
         state["model"],
         [{"role": "user", "content": report_prompt}],
         trace_name="final_report",
+        parent=span,
     )
+    span.end()
     return {"messages": [AIMessage(content=report)]}
 
 

@@ -1,7 +1,9 @@
+import uuid
 from fastapi import APIRouter
 from pydantic import BaseModel
 from langgraph.types import Command
 from app.graph.interview_graph import interview_graph
+from app.services.langfuse import langfuse
 from app.config import settings
 
 router = APIRouter(prefix="/session", tags=["session"])
@@ -29,6 +31,9 @@ def _extract_response(state: dict, graph_state) -> dict:
 @router.post("/start")
 async def start_session(req: StartRequest):
     config = {"configurable": {"thread_id": str(req.session_id)}}
+    trace_id = str(uuid.uuid4())
+    langfuse.trace(id=trace_id, name="interview_session", metadata={"session_id": req.session_id})
+
     initial_state = {
         "session_id": req.session_id,
         "model": req.model,
@@ -37,6 +42,7 @@ async def start_session(req: StartRequest):
         "current_question": "",
         "scores": [],
         "messages": [],
+        "langfuse_trace_id": trace_id,
     }
     state = await interview_graph.ainvoke(initial_state, config=config)
     graph_state = interview_graph.get_state(config)

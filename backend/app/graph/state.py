@@ -11,3 +11,4 @@ class InterviewState(TypedDict):
     current_question: str
     scores: list[dict]
     messages: Annotated[list, add_messages]
+    langfuse_trace_id: str

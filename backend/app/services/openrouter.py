@@ -10,9 +10,9 @@ HEADERS = {"Authorization": f"Bearer {settings.openrouter_api_key}"}
 EMBEDDING_MODEL = "openai/text-embedding-3-small"
 
 
-async def chat(model: str, messages: list[dict], trace_name: str = "chat") -> str:
-    trace = langfuse.trace(name=trace_name)
-    generation = trace.generation(name="completion", model=model, input=messages)
+async def chat(model: str, messages: list[dict], trace_name: str = "chat", parent=None) -> str:
+    observation = parent if parent else langfuse.trace(name=trace_name)
+    generation = observation.generation(name=trace_name, model=model, input=messages)
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
