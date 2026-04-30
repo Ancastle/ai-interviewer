@@ -5,7 +5,9 @@ from app.config import settings
 from app.services.langfuse import langfuse
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+EMBEDDINGS_URL = "https://openrouter.ai/api/v1/embeddings"
 HEADERS = {"Authorization": f"Bearer {settings.openrouter_api_key}"}
+EMBEDDING_MODEL = "openai/text-embedding-3-small"
 
 
 async def chat(model: str, messages: list[dict], trace_name: str = "chat") -> str:
@@ -60,3 +62,16 @@ async def chat_stream(model: str, messages: list[dict], trace_name: str = "chat_
 
     generation.end(output="".join(full_response))
     langfuse.flush()
+
+
+async def embed(texts: list[str]) -> list[list[float]]:
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            EMBEDDINGS_URL,
+            headers=HEADERS,
+            json={"model": EMBEDDING_MODEL, "input": texts},
+            timeout=30,
+        )
+        response.raise_for_status()
+        data = response.json()
+    return [item["embedding"] for item in data["data"]]

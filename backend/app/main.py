@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from app.database import engine, Base, SessionLocal
+from app.services.vector_store import init_vector_db
 from app.routers.chat import router as chat_router
 from app.routers.interview import router as interview_router
 from app.routers.documents import router as documents_router
@@ -12,6 +13,7 @@ import app.models
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    init_vector_db()
     yield
 
 
