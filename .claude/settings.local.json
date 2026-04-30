@@ -11,7 +11,10 @@
       "PowerShell(docker compose ps *)",
       "PowerShell(taskkill *)",
       "PowerShell(echo $env:OPENROUTER_API_KEY)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }
