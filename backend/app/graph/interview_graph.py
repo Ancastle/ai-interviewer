@@ -34,7 +34,7 @@ def build_graph():
     )
     graph.add_edge("generate_final_report", END)
 
-    return graph.compile(checkpointer=checkpointer, interrupt_before=["wait_for_answer"])
+    return graph.compile(checkpointer=checkpointer)
 
 
 interview_graph = build_graph()

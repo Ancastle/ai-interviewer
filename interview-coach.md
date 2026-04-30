@@ -7,12 +7,18 @@
 
 ## Active Section
 
-**Current Week:** Week 4 — LangGraph
+**Current Week:** Week 5 — MCP Server
 **Status:** Not started
-**Focus:** Graph setup, nodes, conditional edges
+**Focus:** MCP server setup, 3 tools, connect to LangGraph
 
 **In Progress:**
 - [ ] nothing yet
+
+**Completed (Week 4):**
+- [x] LangGraph setup + InterviewState
+- [x] Nodes: generate_question, wait_for_answer, evaluate_answer, generate_final_report
+- [x] Conditional edges + loop
+- [x] Session endpoints: POST /session/start, POST /session/{id}/answer
 
 **Completed (Week 3):**
 - [x] Parse CV (PDF → text)
@@ -246,8 +252,8 @@ Screens:
 | 1 | Backend Base | Done |
 | 2 | Prompt Engineering + Langfuse | Done |
 | 3 | RAG | Done |
-| 4 | LangGraph | Not started |
-| 5 | MCP Server | Not started |
+| 4 | LangGraph | Done |
+| 5 | MCP Server | Next |
 | 6 | Frontend | Not started |
 | 7 | LLM Evaluation | Not started |
 | 8 | Final Integration | Not started |

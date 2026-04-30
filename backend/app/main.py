@@ -7,6 +7,7 @@ from app.services.vector_store import init_vector_db
 from app.routers.chat import router as chat_router
 from app.routers.interview import router as interview_router
 from app.routers.documents import router as documents_router
+from app.routers.session import router as session_router
 import app.models
 
 
@@ -21,6 +22,7 @@ app = FastAPI(title="Interview Coach API", lifespan=lifespan)
 app.include_router(chat_router)
 app.include_router(interview_router)
 app.include_router(documents_router)
+app.include_router(session_router)
 
 
 @app.get("/health")
